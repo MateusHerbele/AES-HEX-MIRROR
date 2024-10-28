@@ -5,7 +5,6 @@
 int main(void){
     // Sample data
     unsigned char *key = (unsigned char *)"01234567890123456789012345678901"; // 256-bit key
-    unsigned char *iv = (unsigned char *)"0123456789012345";                 // 128-bit IV
     unsigned char *plaintext = (unsigned char *)"Segredo muito secreto!";    // Plaintext
 
     // Buffers for ciphertext and decrypted text
@@ -13,10 +12,10 @@ int main(void){
     unsigned char decryptedtext[128];
 
     // Encrypt the plaintext
-    int ciphertext_len = encrypt(plaintext, strlen((char *)plaintext), key, iv, ciphertext);
+    int ciphertext_len = encrypt(plaintext, strlen((char *)plaintext), key, ciphertext);
 
     // Decrypt the ciphertext
-    int decryptedtext_len = decrypt(ciphertext, ciphertext_len, key, iv, decryptedtext);
+    int decryptedtext_len = decrypt(ciphertext, ciphertext_len, key, decryptedtext);
 
     // Null-terminate the decrypted text
     decryptedtext[decryptedtext_len] = '\0';
