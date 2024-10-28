@@ -11,7 +11,8 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key, uns
     int ciphertext_len;
 
     // Create and initialize the context 
-    if(!(ctx = EVP_CIPHER_CTX_new())) handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) 
+        handleErrors();
 
     // Initialize the encryption operation with AES-256-CBC 
     if(1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_ecb(), NULL, key, NULL))
@@ -38,7 +39,8 @@ int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key, u
     int plaintext_len;
 
     // Create and initialize the context 
-    if(!(ctx = EVP_CIPHER_CTX_new())) handleErrors();
+    if(!(ctx = EVP_CIPHER_CTX_new())) 
+        handleErrors();
 
     // Initialize the decryption operation with AES-256-CBC 
     if(1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_ecb(), NULL, key, NULL))

@@ -1,33 +1,33 @@
-# Nome do executável
-TARGET = teste
+# Name of the executable
+TARGET = teste-original
 
-# Compilador e flags
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 LDFLAGS = -lssl -lcrypto
 
-# Arquivos fonte e objetos
+# Source and object files
 SRC = main.c aux.c
 OBJ = $(SRC:.c=.o)
 
-# Regra padrão
+# Default rule
 all: $(TARGET)
 
-# Regra para criar o executável
+# Rule to create the executable
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) $(LDFLAGS)
 
-# Regra para criar arquivos objeto
+# Rule to create object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Limpa arquivos objeto
+# Clean object files
 clean:
 	rm -f $(OBJ)
 
-# Limpa arquivos objeto e o executável
+# Clean object files and the executable
 purge: clean
 	rm -f $(TARGET)
 
-# Declaração de phony targets
+# Declaration of phony targets
 .PHONY: all clean purge
