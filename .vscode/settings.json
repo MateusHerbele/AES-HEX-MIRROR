@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "aes.h": "c",
+        "aes_local.h": "c"
+    }
+}

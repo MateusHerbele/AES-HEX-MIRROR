@@ -41,7 +41,7 @@
  * use where we're using them to implement the higher level EVP interface, as is
  * the case here.
  */
-#include "internal/deprecated.h"
+// #include "internal/deprecated.h"
 
 #include <assert.h>
 
@@ -664,16 +664,16 @@ int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
  * Encrypt a single block
  * in and out can overlap
  */
-void AES_encrypt(const unsigned char *in, unsigned char *out,
-                 const AES_KEY *key)
-{
-    const u64 *rk;
+// void AES_encrypt(const unsigned char *in, unsigned char *out,
+//                  const AES_KEY *key)
+// {
+//     const u64 *rk;
 
-    assert(in && out && key);
-    rk = (u64*)key->rd_key;
+//     assert(in && out && key);
+//     rk = (u64*)key->rd_key;
 
-    Cipher(in, out, rk, key->rounds);
-}
+//     Cipher(in, out, rk, key->rounds);
+// }
 
 /*
  * Decrypt a single block
@@ -1430,14 +1430,14 @@ int AES_set_decrypt_key(const unsigned char *userKey, const int bits,
  * Encrypt a single block
  * in and out can overlap
  */
-void AES_encrypt(const unsigned char *in, unsigned char *out,
+void criptografando(const unsigned char *in, unsigned char *out,
                  const AES_KEY *key) {
-
-
-            printf("oieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n");
 
     const u32 *rk;
     u32 s0, s1, s2, s3, t0, t1, t2, t3;
+
+    printf("oieee");
+
 #ifndef FULL_UNROLL
     int r;
 #endif /* ?FULL_UNROLL */
@@ -1453,7 +1453,6 @@ void AES_encrypt(const unsigned char *in, unsigned char *out,
     s1 = GETU32(in +  4) ^ rk[1];
     s2 = GETU32(in +  8) ^ rk[2];
     s3 = GETU32(in + 12) ^ rk[3];
-    
 #ifdef FULL_UNROLL
     /* round 1: */
     t0 = Te0[s0 >> 24] ^ Te1[(s1 >> 16) & 0xff] ^ Te2[(s2 >>  8) & 0xff] ^ Te3[s3 & 0xff] ^ rk[ 4];
@@ -1628,7 +1627,6 @@ void AES_encrypt(const unsigned char *in, unsigned char *out,
 void AES_decrypt(const unsigned char *in, unsigned char *out,
                  const AES_KEY *key)
 {
-
     const u32 *rk;
     u32 s0, s1, s2, s3, t0, t1, t2, t3;
 #ifndef FULL_UNROLL
