@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "aes_local.h"
+#include <openssl/aes.h>
 //#include <openssl/aes.h>
 
 
@@ -50,7 +51,7 @@ int main(){
 
     // Encrypting the plaintext
    criptografando(paddedtext, ciphertext, &encryptKey);
-    AES_decrypt(ciphertext, decryptedtext, &encryptKey);
+   descriptogranfando(ciphertext, decryptedtext, &encryptKey);
 
     // Length of the ciphertext
     int ciphertext_len = strlen((char *)plaintext);

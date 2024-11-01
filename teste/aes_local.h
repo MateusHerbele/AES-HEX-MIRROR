@@ -15,13 +15,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+#include <openssl/aes.h>
 
 
 
 void criptografando(const unsigned char *in, unsigned char *out,
                  const AES_KEY *key);
 
-void AES_decrypt(const unsigned char *in, unsigned char *out,
+void descriptogranfando(const unsigned char *in, unsigned char *out,
                  const AES_KEY *key);
 
 
