@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -g
 LDFLAGS = -lssl -lcrypto
 
 # Source files
-SRC = main.c aes_local.c
+SRC = aes_local.c main.c 
 OBJ = $(SRC:.c=.o)
 
 # Default rule

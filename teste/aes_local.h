@@ -19,8 +19,6 @@
 
 
 
-void criptografando(const unsigned char *in, unsigned char *out,
-                 const AES_KEY *key);
 
 void descriptogranfando(const unsigned char *in, unsigned char *out,
                  const AES_KEY *key);
@@ -50,5 +48,8 @@ typedef unsigned char u8;
 
 /* This controls loop-unrolling in aes_core.c */
 # undef FULL_UNROLL
+
+void teste(const unsigned char *in, unsigned char *out, const AES_KEY *key);
+
 
 #endif                          /* !OSSL_CRYPTO_AES_LOCAL_H */

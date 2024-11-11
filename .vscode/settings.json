@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "aes.h": "c",
-        "aes_local.h": "c"
+        "aes_local.h": "c",
+        "e_os2.h": "c"
     }
 }

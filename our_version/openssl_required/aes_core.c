@@ -703,6 +703,7 @@ Td3[x] = Si[x].[09, 0d, 0b, 0e];
 Td4[x] = Si[x].[01];
 */
 
+//caixas encriptar
 static const u32 Te0[256] = {
     0xc66363a5U, 0xf87c7c84U, 0xee777799U, 0xf67b7b8dU,
     0xfff2f20dU, 0xd66b6bbdU, 0xde6f6fb1U, 0x91c5c554U,
@@ -968,6 +969,7 @@ static const u32 Te3[256] = {
     0xb0b0cb7bU, 0x5454fca8U, 0xbbbbd66dU, 0x16163a2cU,
 };
 
+//caixas decriptar
 static const u32 Td0[256] = {
     0x51f4a750U, 0x7e416553U, 0x1a17a4c3U, 0x3a275e96U,
     0x3bab6bcbU, 0x1f9d45f1U, 0xacfa58abU, 0x4be30393U,
@@ -1531,94 +1533,94 @@ void AES_encrypt(const unsigned char *in, unsigned char *out,
      */
     r = key->rounds >> 1;
     for (;;) {
-        t0 =
-            Te0[(s0 >> 24)       ] ^
-            Te1[(s1 >> 16) & 0xff] ^
-            Te2[(s2 >>  8) & 0xff] ^
-            Te3[(s3      ) & 0xff] ^
-            rk[4];
-        t1 =
-            Te0[(s1 >> 24)       ] ^
-            Te1[(s2 >> 16) & 0xff] ^
-            Te2[(s3 >>  8) & 0xff] ^
-            Te3[(s0      ) & 0xff] ^
-            rk[5];
-        t2 =
-            Te0[(s2 >> 24)       ] ^
-            Te1[(s3 >> 16) & 0xff] ^
-            Te2[(s0 >>  8) & 0xff] ^
-            Te3[(s1      ) & 0xff] ^
-            rk[6];
-        t3 =
-            Te0[(s3 >> 24)       ] ^
-            Te1[(s0 >> 16) & 0xff] ^
-            Te2[(s1 >>  8) & 0xff] ^
-            Te3[(s2      ) & 0xff] ^
-            rk[7];
+        // t0 =
+        //     Te0[(s0 >> 24)       ] ^
+        //     Te1[(s1 >> 16) & 0xff] ^
+        //     Te2[(s2 >>  8) & 0xff] ^
+        //     Te3[(s3      ) & 0xff] ^
+        //     rk[4];
+        // t1 =
+        //     Te0[(s1 >> 24)       ] ^
+        //     Te1[(s2 >> 16) & 0xff] ^
+        //     Te2[(s3 >>  8) & 0xff] ^
+        //     Te3[(s0      ) & 0xff] ^
+        //     rk[5];
+        // t2 =
+        //     Te0[(s2 >> 24)       ] ^
+        //     Te1[(s3 >> 16) & 0xff] ^
+        //     Te2[(s0 >>  8) & 0xff] ^
+        //     Te3[(s1      ) & 0xff] ^
+        //     rk[6];
+        // t3 =
+        //     Te0[(s3 >> 24)       ] ^
+        //     Te1[(s0 >> 16) & 0xff] ^
+        //     Te2[(s1 >>  8) & 0xff] ^
+        //     Te3[(s2      ) & 0xff] ^
+        //     rk[7];
 
-        rk += 8;
-        if (--r == 0) {
-            break;
-        }
+        // rk += 8;
+        // if (--r == 0) {
+        //     break;
+        // }
 
-        s0 =
-            Te0[(t0 >> 24)       ] ^
-            Te1[(t1 >> 16) & 0xff] ^
-            Te2[(t2 >>  8) & 0xff] ^
-            Te3[(t3      ) & 0xff] ^
-            rk[0];
-        s1 =
-            Te0[(t1 >> 24)       ] ^
-            Te1[(t2 >> 16) & 0xff] ^
-            Te2[(t3 >>  8) & 0xff] ^
-            Te3[(t0      ) & 0xff] ^
-            rk[1];
-        s2 =
-            Te0[(t2 >> 24)       ] ^
-            Te1[(t3 >> 16) & 0xff] ^
-            Te2[(t0 >>  8) & 0xff] ^
-            Te3[(t1      ) & 0xff] ^
-            rk[2];
-        s3 =
-            Te0[(t3 >> 24)       ] ^
-            Te1[(t0 >> 16) & 0xff] ^
-            Te2[(t1 >>  8) & 0xff] ^
-            Te3[(t2      ) & 0xff] ^
-            rk[3];
+        // s0 =
+        //     Te0[(t0 >> 24)       ] ^
+        //     Te1[(t1 >> 16) & 0xff] ^
+        //     Te2[(t2 >>  8) & 0xff] ^
+        //     Te3[(t3      ) & 0xff] ^
+        //     rk[0];
+        // s1 =
+        //     Te0[(t1 >> 24)       ] ^
+        //     Te1[(t2 >> 16) & 0xff] ^
+        //     Te2[(t3 >>  8) & 0xff] ^
+        //     Te3[(t0      ) & 0xff] ^
+        //     rk[1];
+        // s2 =
+        //     Te0[(t2 >> 24)       ] ^
+        //     Te1[(t3 >> 16) & 0xff] ^
+        //     Te2[(t0 >>  8) & 0xff] ^
+        //     Te3[(t1      ) & 0xff] ^
+        //     rk[2];
+        // s3 =
+        //     Te0[(t3 >> 24)       ] ^
+        //     Te1[(t0 >> 16) & 0xff] ^
+        //     Te2[(t1 >>  8) & 0xff] ^
+        //     Te3[(t2      ) & 0xff] ^
+        //     rk[3];
     }
 #endif /* ?FULL_UNROLL */
     /*
      * apply last round and
      * map cipher state to byte array block:
      */
-    s0 =
-        (Te2[(t0 >> 24)       ] & 0xff000000) ^
-        (Te3[(t1 >> 16) & 0xff] & 0x00ff0000) ^
-        (Te0[(t2 >>  8) & 0xff] & 0x0000ff00) ^
-        (Te1[(t3      ) & 0xff] & 0x000000ff) ^
-        rk[0];
-    PUTU32(out     , s0);
-    s1 =
-        (Te2[(t1 >> 24)       ] & 0xff000000) ^
-        (Te3[(t2 >> 16) & 0xff] & 0x00ff0000) ^
-        (Te0[(t3 >>  8) & 0xff] & 0x0000ff00) ^
-        (Te1[(t0      ) & 0xff] & 0x000000ff) ^
-        rk[1];
-    PUTU32(out +  4, s1);
-    s2 =
-        (Te2[(t2 >> 24)       ] & 0xff000000) ^
-        (Te3[(t3 >> 16) & 0xff] & 0x00ff0000) ^
-        (Te0[(t0 >>  8) & 0xff] & 0x0000ff00) ^
-        (Te1[(t1      ) & 0xff] & 0x000000ff) ^
-        rk[2];
-    PUTU32(out +  8, s2);
-    s3 =
-        (Te2[(t3 >> 24)       ] & 0xff000000) ^
-        (Te3[(t0 >> 16) & 0xff] & 0x00ff0000) ^
-        (Te0[(t1 >>  8) & 0xff] & 0x0000ff00) ^
-        (Te1[(t2      ) & 0xff] & 0x000000ff) ^
-        rk[3];
-    PUTU32(out + 12, s3);
+    // s0 =
+    //     (Te2[(t0 >> 24)       ] & 0xff000000) ^
+    //     (Te3[(t1 >> 16) & 0xff] & 0x00ff0000) ^
+    //     (Te0[(t2 >>  8) & 0xff] & 0x0000ff00) ^
+    //     (Te1[(t3      ) & 0xff] & 0x000000ff) ^
+    //     rk[0];
+    // PUTU32(out     , s0);
+    // s1 =
+    //     (Te2[(t1 >> 24)       ] & 0xff000000) ^
+    //     (Te3[(t2 >> 16) & 0xff] & 0x00ff0000) ^
+    //     (Te0[(t3 >>  8) & 0xff] & 0x0000ff00) ^
+    //     (Te1[(t0      ) & 0xff] & 0x000000ff) ^
+    //     rk[1];
+    // PUTU32(out +  4, s1);
+    // s2 =
+    //     (Te2[(t2 >> 24)       ] & 0xff000000) ^
+    //     (Te3[(t3 >> 16) & 0xff] & 0x00ff0000) ^
+    //     (Te0[(t0 >>  8) & 0xff] & 0x0000ff00) ^
+    //     (Te1[(t1      ) & 0xff] & 0x000000ff) ^
+    //     rk[2];
+    // PUTU32(out +  8, s2);
+    // s3 =
+    //     (Te2[(t3 >> 24)       ] & 0xff000000) ^
+    //     (Te3[(t0 >> 16) & 0xff] & 0x00ff0000) ^
+    //     (Te0[(t1 >>  8) & 0xff] & 0x0000ff00) ^
+    //     (Te1[(t2      ) & 0xff] & 0x000000ff) ^
+    //     rk[3];
+    // PUTU32(out + 12, s3);
 }
 
 /*
