@@ -19,9 +19,9 @@ if sys.version_info[0] == 3:
 def hexMirror(word):
 
     mirrored = []
-    print("Original Hex:")
-    for row in word:
-        print([hex(val) for val in row])
+    # print("Original Hex:")
+    # for row in word:
+    #     print([hex(val) for val in row])
 
     for i in range(len(word)):
         mirrored.append([]) # Adiciona uma nova linha para o novo hex
@@ -35,9 +35,9 @@ def hexMirror(word):
 
 
     # Exibir a representação do novo hex após o espelhamento
-    print("\nMirrored Hex:")
-    for row in mirrored:
-        print([hex(val) for val in row])
+    # print("\nMirrored Hex:")
+    # for row in mirrored:
+    #     print([hex(val) for val in row])
 
     return mirrored
 
@@ -137,18 +137,12 @@ def InvCipher(block, w, Nb=4, Nk=4, Nr=10):
 
     for r in range(Nr-1, 0, -1):
         state = InvShiftRows(state)
-        
-        # state = InvSubBytes(state) substituir
         state = hexMirror(state)
-
         state = AddRoundKey(state, w[r*Nb:(r+1)*Nb])
         state = InvMixColumns(state)
 
     state = InvShiftRows(state)
-    
-    # state = InvSubBytes(state) substituir
     state = hexMirror(state)
-
     state = AddRoundKey(state, w[:Nb])
 
     return state
@@ -164,18 +158,13 @@ def KeyExpansion(key, Nb=4, Nk=4, Nr=10):
     while i < Nb * (Nr + 1):
         temp = w[i-1][:]
         if i % Nk == 0:
-            # temp = SubWord(RotWord(temp)) SUBSTITUIR?
             aux = []
             aux.append(RotWord(temp))
-            print("RotWord(temp): ", aux)
             temp = hexMirror(aux)
-            print("temp1: ", temp)
             temp = temp[0]
             temp[0] ^= Rcon[(i//Nk)]
         elif Nk > 6 and i % Nk == 4:
-            print("temp2: ", temp)
             temp = hexMirror(temp)
-            # temp = SubWord(temp) SUBSTITUIR?
 
         for j in range(len(temp)):
             temp[j] ^= w[i-Nk][j]
@@ -486,8 +475,6 @@ def main():
             output = block
 
     if mode == '-d':  # Decript
-        print("entrei aqui tmb")
-        print("Output: ", output.decode())
         output = output.decode()
         output = unpadding(output, Nb)
 
