@@ -116,16 +116,12 @@ def Cipher(block, w, Nb=4, Nk=4, Nr=10):
     state = AddRoundKey(block, w[:Nb])
 
     for r in range(1, Nr):
-        # state = SubBytes(state) SUBSTITUIR
         state = hexMirror(state)
-
         state = ShiftRows(state)
         state = MixColumns(state)
         state = AddRoundKey(state, w[r*Nb:(r+1)*Nb])
 
-    # state = SubBytes(state) SUBSTITUIR
     state = hexMirror(state)
-
     state = ShiftRows(state)
     state = AddRoundKey(state, w[Nr*Nb:(Nr+1)*Nb])
 
@@ -149,6 +145,9 @@ def InvCipher(block, w, Nb=4, Nk=4, Nr=10):
 
 
 def KeyExpansion(key, Nb=4, Nk=4, Nr=10):
+    '''
+    Expansão da chave
+    '''
     w = []
     for word in key:
         w.append(word[:])
@@ -260,6 +259,10 @@ def process_block(block, Nb=4):
 def process_key(key, Nk=4):
     try:
         key = key.replace(" ", "")
+        '''
+        Separa em uma matriz, fragmentando a chave em 4 bytes por palavra
+        e converte todos os bytes em inteiros
+        '''
         return [[int(key[i*8+j*2:i*8+j*2+2], 16) for j in range(4)]
                 for i in range(Nk)]
     except:
@@ -408,8 +411,7 @@ def main():
 
     Nr = Nk + 6
 
-    key = raw_input(
-        "Enter a key, formed by 16 digits: ")
+    key = raw_input("Enter a key, formed by 16 digits: ")
     key = key.replace(' ', '')
     key = key.encode().hex()
     print("Key: ", key)
@@ -465,7 +467,6 @@ def main():
         if mode == '-e':  # Encrypt
             block = Cipher(block, expanded_key, Nb, Nk, Nr)
         elif mode == '-d':  # Decript
-            print("entrei aqui")
             block = InvCipher(block, expanded_key, Nb, Nk, Nr)
 
         block = prepare_block(block)
