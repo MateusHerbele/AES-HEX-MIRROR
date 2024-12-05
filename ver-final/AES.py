@@ -9,6 +9,7 @@
 
 import sys
 import os.path
+import time
 from ProgressBar import ProgressBar
 from AES_base import gfp2, gfp3, gfp9, gfp11, gfp13, gfp14, Rcon
 
@@ -113,6 +114,7 @@ def AddRoundKey(state, key):
 
 
 def Cipher(block, w, Nb=4, Nk=4, Nr=10):
+    
     state = AddRoundKey(block, w[:Nb])
 
     for r in range(1, Nr):
@@ -298,11 +300,13 @@ def str_block_line(block):
 def help():
     print ("Help:")
     print("python AES.py -demo")
-    print("python AES.py (-e | -d) <file> [-c (128|192|256)]")
+    print("python AES.py (-e | -d | -ce | -cd) <file> [-c (128|192|256)]")
     print("    -e: Encrypt")
     print("    -d: Decrypt")
+    print("    -ce: Calculate encrypt time")
+    print("    -cd: Calculate decrypt time")
     print("    -c <n>: <n> bits key (default 128)")
-    print("Note: a function mode (-e/-d) has to be specified.")
+    print("Note: a function mode (-e/-d/-ce/-cd) has to be specified.")
     sys.exit()
 
 
@@ -389,7 +393,7 @@ def main():
     mode = sys.argv[1]
     ifile = sys.argv[2]
 
-    if mode not in ['-e', '-d'] or not os.path.exists(ifile):
+    if mode not in ['-e', '-d', '-ce', '-cd'] or not os.path.exists(ifile):
         help()
 
     try:
@@ -434,7 +438,12 @@ def main():
     if mode == '-e':
         ofile = ifile + '.aes'
     elif mode == '-d' and (ifile.endswith('.aes') or ifile.endswith('.cif')):
-        ofile = ifile[:-4]
+        ofile = ifile[:-4]   
+    elif mode == '-ce':
+        ofile = ifile + '.aes'
+    elif mode == '-cd' and (ifile.endswith('.aes') or ifile.endswith('.cif')):
+        ofile = ifile[:-4]   
+        
     else:
         ofile = raw_input('Enter the output filename: ')
         path_end = ifile.rfind('/')
@@ -455,8 +464,14 @@ def main():
 
     if mode == '-e':  # Encrypt
         inf = padding(inf, Nb)
+    elif mode == '-ce':
+        inf = padding(inf, Nb)
 
     print('')
+    if mode == '-ce': 
+        inicio = time.time()
+    elif mode == '-cd':
+        inicio = time.time()
     while inf:
         block, inf = get_block(inf, Nb)
 
@@ -468,19 +483,36 @@ def main():
             block = Cipher(block, expanded_key, Nb, Nk, Nr)
         elif mode == '-d':  # Decript
             block = InvCipher(block, expanded_key, Nb, Nk, Nr)
-
+        elif mode == '-cd':  # Decript
+            block = InvCipher(block, expanded_key, Nb, Nk, Nr)
+        elif mode == '-ce':
+            block = Cipher(block, expanded_key, Nb, Nk, Nr)
         block = prepare_block(block)
         if output:
             output += block
         else:
             output = block
 
+    if mode == '-ce': 
+        fim = time.time()
+        tempo_total = fim - inicio
+        print(f"\nTempo de execução: {tempo_total:.6f} segundos")
+
     if mode == '-d':  # Decript
         output = output.decode()
         output = unpadding(output, Nb)
+    elif mode == '-cd':  # Decript
+        output = output.decode()
+        output = unpadding(output, Nb)
+        
+        fim = time.time()
+        tempo_total = fim - inicio
+        print(f"\nTempo de execução: {tempo_total:.6f} segundos")
 
     with open(ofile, 'wb') as f:
         if mode == '-d':
+            f.write(output.encode())
+        elif mode == '-cd':
             f.write(output.encode())
         else:
             f.write(output)
