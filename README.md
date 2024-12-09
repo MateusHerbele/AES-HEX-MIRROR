@@ -33,6 +33,24 @@ Criptografia T1
 
         * Na última rodada, não há MixColumns, então o custo seria O(16) (hexMirror) + O(4) (ShiftRows) + O(16) (AddRoundKey) = O(36).
 
+# Conceito do Desenvolvimento
+
+    1. Baseamo-nos na publicação do NIST (National Institute of Standard and Technology) - FIPS (Federal Information Processing Standards) número 197, que define toda a formulação do AES.
+
+    2. Utilizamos o código do repositório [Python-AES](https://github.com/pcaro90/Python-AES), que implementa de forma pura o que está descrito no documento FIPS 197, em Python.
+
+    3. Removemos as caixas-S de todas as partes do código, tanto no uso de chaves quanto na criptografia do texto plano.
+
+    4. Substituímos essas caixas-S pelo nosso algoritmo chamado Espelhamento-Hex (HexMirror), em todas as instâncias necessárias.
+
+    5. Isso exigiu diversas alterações de codificação e decodificação no código para garantir que a aplicação funcionasse corretamente com a interpretação dos blocos em todas as partes. Essa necessidade surge da natureza fracamente tipada da linguagem Python.
+
+    6. Também modificamos a forma como a chave era recebida. Originalmente, era solicitado o input de valores hexadecimais, o que consideramos imprático. Alteramos para que o programa receba 16 dígitos que são convertidos automaticamente em valores hexadecimais para o funcionamento do algoritmo.
+
+    7. Por fim, concluímos as substituições e, por meio de testes, certificamos a validade do algoritmo tanto na criptografia quanto na descriptografia de arquivos.
+
+
+
 # Comparação de tempo entre nossa versão do AES com a versão recomendada pelo OpenSSL:
     O algoritmo compara o tempo de execução no modo de 128
     Executar:

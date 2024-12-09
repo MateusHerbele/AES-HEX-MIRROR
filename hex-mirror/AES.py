@@ -417,7 +417,7 @@ def main():
     key = raw_input("Entre com uma chave, formada por 16 caracteres: ")
     key = key.replace(' ', '')
     key = key.encode().hex()
-    print("Key: ", key)
+    print("Chave: ", key)
 
 
     if len(key) < Nk * 8:
