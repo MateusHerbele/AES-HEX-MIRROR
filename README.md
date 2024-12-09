@@ -10,8 +10,6 @@ Criptografia T1
 
 
 # Calcular o custo para cifrar e decifrar de cada fase do algoritmo.
-    Abaixo está a descrição do cálculo do custo para cifrar e decifrar de cada fase do algoritmo:
-
     1. Custo AddRoundKey:
         A operação XOR tem um custo O(1) por byte (constante).
         Para um bloco de dados de 16 bytes (pois usa um bloco de 128 bits), a complexidade de AddRoundKey é O(16).
