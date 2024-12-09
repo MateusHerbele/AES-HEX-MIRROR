@@ -399,7 +399,7 @@ def main():
         with open(ifile, 'rb') as f:
             inf = f.read()
     except:
-        print ("Error while trying to read input file.")
+        print ("Erro ao ler arquivo de entrada.")
         sys.exit()
 
     Nb = 4
@@ -414,20 +414,20 @@ def main():
 
     Nr = Nk + 6
 
-    key = raw_input("Enter a key, formed by 16 digits: ")
+    key = raw_input("Entre com uma chave, formada por 16 caracteres: ")
     key = key.replace(' ', '')
     key = key.encode().hex()
     print("Key: ", key)
 
 
     if len(key) < Nk * 8:
-        print ("Key too short. Filling with \'0\',"
-               "so the length is exactly 16 digits.")
+        print ("Chave muito pequena. Preenchendo com \'0\',"
+               "para a chave ter 16 digitos.")
         key += "0" * (Nk * 8 - len(key))
 
     elif len(key) > Nk * 8:
         print (
-            "Key too long. Keeping only the first 16 digits.")
+            "Chave muito longa, mantendo só os primeiros 16 digitos.")
         key = key[:Nk * 8]
 
     key = process_key(key, Nk)
@@ -444,7 +444,7 @@ def main():
         ofile = ifile[:-4]   
         
     else:
-        ofile = raw_input('Enter the output filename: ')
+        ofile = raw_input('Nome do arquivo de saída: ')
         path_end = ifile.rfind('/')
         if path_end == -1:
             path_end = ifile.rfind('\\')
@@ -453,9 +453,9 @@ def main():
 
     if os.path.exists(ofile):
         spam = raw_input(
-            'The file "{0}" already exists. Overwrite? [y/N] '.format(ofile))
+            'O arquivo "{0}" já existe. Escrever em cima? [y/N] '.format(ofile))
         if spam.upper() != 'Y':
-            ofile = raw_input('Enter new filename: ')
+            ofile = raw_input('Novo nome do arquivo que deseja: ')
 
     pb = ProgressBar(len(inf), 0)
 
