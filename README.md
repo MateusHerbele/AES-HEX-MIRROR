@@ -4,7 +4,7 @@ Criptografia T1
 # Calcular o tempo total para cifrar e decifrar arquivos de tamanhos diversos:
     Executar programa com opção [-ce] para criptografar e [-cd] para descriptografar.
     Para criptografar:
-    python3 AES.py -ce <texto> -c 128c
+    python3 AES.py -ce <texto> -c 128
     Para descriptografar:
     python3 AES.py -cd <texto> -c 128
 
@@ -38,4 +38,5 @@ Criptografia T1
 # Comparação de tempo entre nossa versão do AES com a versão recomendada pelo OpenSSL:
     O algoritmo compara o tempo de execução no modo de 128
     Executar:
+	source venv/bin/activate
         python3 compara_versoes.py <texto>

@@ -11,9 +11,9 @@ def medir_tempo_criptografia():
         return
 
     arquivo = sys.argv[1]
-    arquivo_criptografado1 = "texto1.txt.aes"
-    arquivo_criptografado2 = "texto1_criptografado.aes"
-    arquivo_descriptografado2 = "texto1_descriptografado.txt"
+    arquivo_criptografado1 = sys.argv[1] + ".aes"
+    arquivo_criptografado2 = "texto_criptografado_original.aes"
+    arquivo_descriptografado2 = "texto_descriptografado_original.txt"
     
     command1 = [
         "python3", "./ver-final/AES.py", "-ce", arquivo, "-c", "128"
@@ -23,15 +23,15 @@ def medir_tempo_criptografia():
     ]
 
     print("\n------------------------------CRIPTOGRAFIA------------------------------------------")
-    print("Executando a criptografia do primeiro algoritmo...")
+    print("(HexMirror) Executando a criptografia...")
     try:
         subprocess.run(command1, check=True)
     except subprocess.CalledProcessError as e:
         print("Erro ao executar o comando 1:", e)
         return
 
-    print("\nExecutando a criptografia do segundo algoritmo...")
-    chave = b"1234567891234567" 
+    print("\n(Original) Executando a criptografia...")
+    chave = input("Digite a chave de 16 bytes: ").encode()
     iv = os.urandom(16) 
 
     cipher = AES.new(chave, AES.MODE_CBC, iv) 
@@ -43,21 +43,21 @@ def medir_tempo_criptografia():
     token = cipher.encrypt(pad(arquivo_conteudo, AES.block_size))  
     fim2 = time.time()
     tempo_criptografia2 = fim2 - inicio2
-    print(f"Tempo de execução da criptografia do segundo algoritmo: {tempo_criptografia2:.6f} segundos")
+    print(f"Tempo de execução: {tempo_criptografia2:.6f} segundos")
 
     with open(arquivo_criptografado2, 'wb') as arquivo2_criptografado:
         arquivo2_criptografado.write(iv + token)
 
     print("\n------------------------------DESCRIPTOGRAFIA------------------------------------------")
 
-    print("Executando a descriptografia do primeiro algoritmo...")
+    print("(HexMirror) Executando a descriptografia ...")
     try:
         subprocess.run(command2, check=True)
     except subprocess.CalledProcessError as e:
         print("Erro ao executar o comando 2:", e)
         return
 
-    print("\nExecutando a descriptografia do segundo algoritmo...")
+    print("\n(Original) Executando a descriptografia...")
     with open(arquivo_criptografado2, 'rb') as arquivo_criptografado:
         iv = arquivo_criptografado.read(16) 
         token_criptografado = arquivo_criptografado.read() 
@@ -68,7 +68,7 @@ def medir_tempo_criptografia():
     conteudo_original = unpad(cipher_decrypt.decrypt(token_criptografado), AES.block_size) 
     fim4 = time.time()
     tempo_descriptografia2 = fim4 - inicio4
-    print(f"Tempo de execução da descriptografia do segundo algoritmo: {tempo_descriptografia2:.6f} segundos")
+    print(f"Tempo de execução: {tempo_descriptografia2:.6f} segundos")
 
     with open(arquivo_descriptografado2, 'wb') as arquivo_descriptografado:
         arquivo_descriptografado.write(conteudo_original)

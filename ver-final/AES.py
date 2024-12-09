@@ -298,15 +298,14 @@ def str_block_line(block):
 
 
 def help():
-    print ("Help:")
+    print ("Ajuda:")
     print("python AES.py -demo")
-    print("python AES.py (-e | -d | -ce | -cd) <file> [-c (128|192|256)]")
-    print("    -e: Encrypt")
-    print("    -d: Decrypt")
-    print("    -ce: Calculate encrypt time")
-    print("    -cd: Calculate decrypt time")
-    print("    -c <n>: <n> bits key (default 128)")
-    print("Note: a function mode (-e/-d/-ce/-cd) has to be specified.")
+    print("python AES.py (-e | -d | -ce | -cd) <file>")
+    print("    -e: Encrypt (Criptografar)")
+    print("    -d: Decrypt (Decriptografar)")
+    print("    -ce: Calcula o tempo de criptografia")
+    print("    -cd: Calcula o tempo de descriptografia")
+    print("Note: um modo de função (-e/-d/-ce/-cd) deve ser especificado.")
     sys.exit()
 
 
