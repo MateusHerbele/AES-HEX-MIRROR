@@ -9,7 +9,7 @@ Criptografia T1
     python3 AES.py -cd <texto> -c 128
 
 
-# Calcular o custo para cifrar e decifrar de cada fase do algoritmo. (VER O TEXTO CERTINHO)
+# Calcular o custo para cifrar e decifrar de cada fase do algoritmo.
     Abaixo está a descrição do cálculo do custo para cifrar e decifrar de cada fase do algoritmo:
 
     1. Custo AddRoundKey:
